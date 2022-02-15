@@ -1,6 +1,6 @@
 import './ContactList.scss';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteContacts } from '../../redux/contacts-actions';
+import { deleteContacts } from '../../redux/contacts-operations';
 import { getVisibleContacts } from '../../redux/contacts-selectors';
 import PropTypes from 'prop-types';
 
