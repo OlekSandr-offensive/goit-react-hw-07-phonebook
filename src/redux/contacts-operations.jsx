@@ -32,13 +32,13 @@ export const FetchContacts = () => async dispatch => {
 
 export const AddContact =
   ({ name, number }) =>
-  dispatch => {
+  async dispatch => {
     const contacts = { name: name, number: number };
 
     dispatch(addContactRequest());
 
     try {
-      const { data } = axios.post('/contacts', contacts);
+      const { data } = await axios.post('/contacts', contacts);
 
       dispatch(addContactSuccess(data));
     } catch (error) {
@@ -51,11 +51,11 @@ export const AddContact =
     //   .catch(error => dispatch(addContactError(error)));
   };
 
-export const deleteContacts = contactId => dispatch => {
+export const deleteContacts = contactId => async dispatch => {
   dispatch(deleteContactRequest());
 
   try {
-    const { data } = axios.delete(`/contacts/${contactId}`);
+    const { data } = await axios.delete(`/contacts/${contactId}`);
 
     dispatch(deleteContactSuccess(data));
   } catch (error) {

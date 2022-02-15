@@ -6,7 +6,7 @@ import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 
-import { store, persistor } from './redux/store';
+import { store } from './redux/store';
 
 ReactDOM.render(
   <React.StrictMode>
