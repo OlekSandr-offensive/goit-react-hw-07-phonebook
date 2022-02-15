@@ -16,18 +16,22 @@ const ContactList = () => {
   const onDeleteContacts = id => dispatch(deleteContacts(id));
 
   return (
-    <ul className="ContactList">
-      {contacts.map(({ id, name, number }) => (
-        <li key={id}>
-          <p>
-            {name}:<span>{number}</span>
-          </p>
-          <button type="button" onClick={() => onDeleteContacts(id)}>
-            Delete
-          </button>
-        </li>
-      ))}
-    </ul>
+    <>
+      {contacts.length > 0 && (
+        <ul className="ContactList">
+          {contacts.map(({ id, name, number }) => (
+            <li key={id}>
+              <p>
+                {name}:<span>{number}</span>
+              </p>
+              <button type="button" onClick={() => onDeleteContacts(id)}>
+                Delete
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </>
   );
 };
 
