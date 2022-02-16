@@ -13,7 +13,10 @@ const ContactList = () => {
     dispatch(FetchContacts());
   }, [dispatch]);
 
-  const onDeleteContacts = id => dispatch(deleteContacts(id));
+  const onDeleteContacts = id => {
+    dispatch(deleteContacts(id));
+    dispatch(FetchContacts());
+  };
 
   return (
     <>

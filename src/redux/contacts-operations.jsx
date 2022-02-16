@@ -1,17 +1,6 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import {
-  addContactError,
-  addContactRequest,
-  addContactSuccess,
-  deleteContactRequest,
-  deleteContactSuccess,
-  deleteContactError,
-  fetchContactRequest,
-  fetchContactSuccess,
-  fetchContactError,
-} from './contacts-actions';
 
 axios.defaults.baseURL = 'http://localhost:4000';
 
@@ -22,26 +11,46 @@ const errorNotice = () =>
 
 export const FetchContacts = createAsyncThunk(
   'contacts/fetchContactSuccess',
-  async () => {
-    const { data } = await axios.get('/contact');
-    return data;
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get('/contacts');
+      return data;
+    } catch (error) {
+      errorNotice();
+      return rejectWithValue(error);
+    }
   }
 );
 
 export const AddContact = createAsyncThunk(
   'contacts/addContactSuccess',
-  async ({ name, number }) => {
+  async ({ name, number }, { rejectWithValue }) => {
     const contacts = { name: name, number: number };
-    const { data } = await axios.post('/contacts', contacts);
-    return data;
+    // const { data } = await axios.post('/contacts', contacts);
+    // return data;
+
+    try {
+      const { data } = await axios.post('/contacts', contacts);
+      return data;
+    } catch (error) {
+      errorNotice();
+      return rejectWithValue(error.errorNotice());
+    }
   }
 );
 
 export const deleteContacts = createAsyncThunk(
   'contacts/deleteContactSuccess',
-  async contactId => {
-    const { data } = await axios.delete(`/contacts/${contactId}`);
-    return data;
+  async (contactId, { rejectWithValue }) => {
+    // const { data } = await axios.delete(`/contacts/${contactId}`);
+    // return data;
+    try {
+      const { data } = await axios.delete(`/contacts/${contactId}`);
+      return data;
+    } catch (error) {
+      errorNotice();
+      return rejectWithValue(error);
+    }
   }
 );
 

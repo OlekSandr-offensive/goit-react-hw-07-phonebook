@@ -3,22 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AddContact } from '../../redux/contacts-operations';
 import { getVisibleContacts } from '../../redux/contacts-selectors';
 import { toast } from 'react-toastify';
-// import shortid from 'shortid';
 import 'react-toastify/dist/ReactToastify.css';
 import './ContactForm.scss';
 
 // import { ContactForm } from './ContactForm.styles';
-
-// const { AddContact } = actions;
 
 export default function ContactForm() {
   const contacts = useSelector(getVisibleContacts);
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const dispatch = useDispatch();
-
-  // const contactNameId = shortid.generate();
-  // const contactNumberId = shortid.generate();
 
   const handleInputChanged = event => {
     const { name, value } = event.currentTarget;
@@ -67,7 +61,6 @@ export default function ContactForm() {
           value={name}
           onChange={handleInputChanged}
           required
-          // id={contactNameId}
         />
       </label>
       <label>
@@ -80,7 +73,6 @@ export default function ContactForm() {
           value={number}
           onChange={handleInputChanged}
           required
-          // id={contactNumberId}
         />
       </label>
       <button type="submit">Add contact</button>
