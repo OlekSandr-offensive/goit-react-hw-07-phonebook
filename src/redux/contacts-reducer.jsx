@@ -25,8 +25,21 @@ const error = createReducer(null, {
   [FetchContacts.pending]: () => null,
 });
 
+const isLoading = createReducer(false, {
+  [FetchContacts.pending]: () => true,
+  [FetchContacts.fulfilled]: () => false,
+  [FetchContacts.rejected]: () => false,
+  [AddContact.pending]: () => true,
+  [AddContact.fulfilled]: () => false,
+  [AddContact.rejected]: () => false,
+  [deleteContacts.pending]: () => true,
+  [deleteContacts.fulfilled]: () => false,
+  [deleteContacts.rejected]: () => false,
+});
+
 export default combineReducers({
   items,
   filter,
   error,
+  isLoading,
 });
