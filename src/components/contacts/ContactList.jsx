@@ -2,7 +2,10 @@ import './ContactList.scss';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteContacts, FetchContacts } from '../../redux/contacts-operations';
-import { getVisibleContacts } from '../../redux/contacts-selectors';
+import { getVisibleContacts, isLoading } from '../../redux/contacts-selectors';
+import { Watch } from 'react-loader-spinner';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+
 import PropTypes from 'prop-types';
 
 const ContactList = () => {
@@ -15,7 +18,7 @@ const ContactList = () => {
 
   const onDeleteContacts = id => {
     dispatch(deleteContacts(id));
-    dispatch(FetchContacts());
+    // dispatch(FetchContacts());
   };
 
   return (
@@ -33,6 +36,9 @@ const ContactList = () => {
             </li>
           ))}
         </ul>
+      )}
+      {isLoading === true && (
+        <Watch height="100" width="100" color="teal" ariaLabel="loading" />
       )}
     </>
   );

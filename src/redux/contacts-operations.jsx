@@ -2,7 +2,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-axios.defaults.baseURL = 'http://localhost:4000';
+// axios.defaults.baseURL = 'http://localhost:4000';
+axios.defaults.baseURL = 'https://62093c148f06050017619019.mockapi.io/api/v1/';
 
 const errorNotice = () =>
   toast.error(
@@ -14,6 +15,7 @@ export const FetchContacts = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const { data } = await axios.get('/contacts');
+      console.log('test');
       return data;
     } catch (error) {
       errorNotice();
@@ -34,7 +36,7 @@ export const AddContact = createAsyncThunk(
       return data;
     } catch (error) {
       errorNotice();
-      return rejectWithValue(error.errorNotice());
+      return rejectWithValue(error);
     }
   }
 );

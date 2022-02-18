@@ -7,7 +7,7 @@ export const contactApi = createApi({
   }),
   endpoints: builder => ({
     fetchContacts: builder.query({
-      query: () => `/pokemon/`,
+      query: () => `/contacts/`,
     }),
   }),
 });
