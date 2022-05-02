@@ -7,7 +7,7 @@ axios.defaults.baseURL = 'https://62093c148f06050017619019.mockapi.io/api/v1/';
 
 const errorNotice = () =>
   toast.error(
-    "The request couldn't be processed. Some server issue has occured."
+    "The request couldn't be processed. Some server issue has occured!"
   );
 
 export const FetchContacts = createAsyncThunk(
@@ -15,7 +15,6 @@ export const FetchContacts = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const { data } = await axios.get('/contacts');
-      console.log('test');
       return data;
     } catch (error) {
       errorNotice();

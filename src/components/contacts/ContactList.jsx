@@ -1,45 +1,52 @@
 import './ContactList.scss';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import {
+  useFetchContactsQuery,
+  useDeleteContactsMutation,
+} from '../../redux/contacts-slice';
 import { deleteContacts, FetchContacts } from '../../redux/contacts-operations';
 import { getVisibleContacts, isLoading } from '../../redux/contacts-selectors';
-import { Watch } from 'react-loader-spinner';
+// import { Watch } from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 import PropTypes from 'prop-types';
 
 const ContactList = () => {
-  const contacts = useSelector(getVisibleContacts);
-  const dispatch = useDispatch();
+  const { data: contacts, isFetching } = useFetchContactsQuery();
+  const { deleteContacts } = useDeleteContactsMutation();
 
-  useEffect(() => {
-    dispatch(FetchContacts());
-  }, [dispatch]);
+  // const filteredContacts = contacts ? getVisibleContacts(contacts) : [];
+  // const contacts = useSelector(getVisibleContacts);
+  // const dispatch = useDispatch();
 
-  const onDeleteContacts = id => {
-    dispatch(deleteContacts(id));
-    // dispatch(FetchContacts());
-  };
+  // useEffect(() => {
+  //   dispatch(FetchContacts());
+  // }, [dispatch]);
+
+  // const onDeleteContacts = id => {
+  //   dispatch(deleteContacts(id));
+  // };
 
   return (
     <>
-      {contacts.length > 0 && (
+      {contacts && (
         <ul className="ContactList">
           {contacts.map(({ id, name, number }) => (
             <li key={id}>
               <p>
                 {name}:<span>{number}</span>
               </p>
-              <button type="button" onClick={() => onDeleteContacts(id)}>
+              <button type="button" onClick={() => deleteContacts(id)}>
                 Delete
               </button>
             </li>
           ))}
         </ul>
       )}
-      {isLoading === true && (
+      {/* {isLoading === true && (
         <Watch height="100" width="100" color="teal" ariaLabel="loading" />
-      )}
+      )} */}
     </>
   );
 };

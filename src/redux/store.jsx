@@ -9,15 +9,15 @@ import {
   REGISTER,
 } from 'redux-persist';
 import logger from 'redux-logger';
-import contactsReducer from './contacts-reducer';
-import { contactApi } from './contacts-slice';
+import filterSlice from './contacts-reducer';
+import { contactsApi } from './contacts-slice';
 
 export const store = configureStore({
   reducer: {
-    contacts: contactsReducer,
-    [contactApi.reducerPath]: contactApi.reducer,
+    filter: filterSlice,
+    [contactsApi.reducerPath]: contactsApi.reducer,
   },
-  devTools: process.env.NODE_ENV === 'development',
+  devTools: process.env.NODE_ENV !== 'production',
   middleware: getDefaultMiddleware => [
     ...getDefaultMiddleware({
       serializableCheck: {
@@ -25,7 +25,7 @@ export const store = configureStore({
       },
     }),
     logger,
-    contactApi.middleware,
+    contactsApi.middleware,
   ],
 });
 
