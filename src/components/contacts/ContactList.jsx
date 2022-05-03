@@ -1,38 +1,29 @@
 import './ContactList.scss';
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   useFetchContactsQuery,
   useDeleteContactsMutation,
 } from '../../redux/contacts-slice';
-import { deleteContacts, FetchContacts } from '../../redux/contacts-operations';
-import { getVisibleContacts, isLoading } from '../../redux/contacts-selectors';
-// import { Watch } from 'react-loader-spinner';
+import { getFilters } from '../../redux/filters-selectors';
+import { Watch } from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
-
 import PropTypes from 'prop-types';
 
 const ContactList = () => {
   const { data: contacts, isFetching } = useFetchContactsQuery();
-  const { deleteContacts } = useDeleteContactsMutation();
+  const [deleteContacts] = useDeleteContactsMutation();
 
-  // const filteredContacts = contacts ? getVisibleContacts(contacts) : [];
-  // const contacts = useSelector(getVisibleContacts);
-  // const dispatch = useDispatch();
+  const filters = useSelector(getFilters).toLowerCase();
 
-  // useEffect(() => {
-  //   dispatch(FetchContacts());
-  // }, [dispatch]);
-
-  // const onDeleteContacts = id => {
-  //   dispatch(deleteContacts(id));
-  // };
+  const getFilteredContacts = contacts =>
+    contacts.filter(({ name }) => name.toLowerCase().includes(filters));
+  const filtered = contacts ? getFilteredContacts(contacts) : [];
 
   return (
     <>
-      {contacts && (
+      {filtered && (
         <ul className="ContactList">
-          {contacts.map(({ id, name, number }) => (
+          {filtered.map(({ id, name, number }) => (
             <li key={id}>
               <p>
                 {name}:<span>{number}</span>
@@ -44,9 +35,9 @@ const ContactList = () => {
           ))}
         </ul>
       )}
-      {/* {isLoading === true && (
+      {isFetching === true && (
         <Watch height="100" width="100" color="teal" ariaLabel="loading" />
-      )} */}
+      )}
     </>
   );
 };

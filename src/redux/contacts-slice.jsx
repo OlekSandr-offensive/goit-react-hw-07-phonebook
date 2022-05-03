@@ -12,11 +12,12 @@ export const contactsApi = createApi({
       providesTags: ['contact'],
     }),
     addContact: builder.mutation({
-      query: newContact => ({
+      query: ({ name, number }) => ({
         url: `/contacts/`,
         method: 'POST',
         body: {
-          content: newContact,
+          name,
+          number,
         },
       }),
       invalidatesTags: ['contact'],
@@ -36,17 +37,3 @@ export const {
   useAddContactMutation,
   useDeleteContactsMutation,
 } = contactsApi;
-
-// export const pokemonApi = createApi({
-//   reducerPath: 'pokemonApi',
-//   baseQuery: fetchBaseQuery({ baseUrl: 'https://pokeapi.co/api/v2/' }),
-//   endpoints: builder => ({
-//     getPokemonByName: builder.query({
-//       query: name => `pokemon/${name}`,
-//     }),
-//   }),
-// });
-
-// // Export hooks for usage in functional components, which are
-// // auto-generated based on the defined endpoints
-// export const { useGetPokemonByNameQuery } = pokemonApi;

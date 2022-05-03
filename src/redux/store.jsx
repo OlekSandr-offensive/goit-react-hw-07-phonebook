@@ -9,13 +9,13 @@ import {
   REGISTER,
 } from 'redux-persist';
 import logger from 'redux-logger';
-import filterSlice from './contacts-reducer';
+import filterSlice from './filters-reducer';
 import { contactsApi } from './contacts-slice';
 
 export const store = configureStore({
   reducer: {
-    filter: filterSlice,
     [contactsApi.reducerPath]: contactsApi.reducer,
+    filter: filterSlice.reducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
   middleware: getDefaultMiddleware => [
